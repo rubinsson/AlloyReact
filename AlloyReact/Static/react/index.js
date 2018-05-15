@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import ReactDOM from "react-dom";
 import ReactNumber from "./ReactNumber";
+import TestPage from "./TestPage";
 import PageListBlock from "./PageListBlock";
 import ThreeKeyFacts from "./ThreeKeyFacts";
 
@@ -8,8 +9,9 @@ import ThreeKeyFacts from "./ThreeKeyFacts";
 const ComponentTypes = {
     "PageListBlock": PageListBlock,
     "ReactNumber": ReactNumber,
+    "TestPage": TestPage,
     "ThreeKeyFacts": ThreeKeyFacts
-}
+};
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
