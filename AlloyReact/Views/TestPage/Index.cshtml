@@ -1,5 +1,6 @@
 ﻿@using AlloyReact
+@using EPiServer.Editor;
 @model PageViewModel<TestPage>
 <h1>Test component</h1>
 
-@Html.ReactComponent("TestPage", new { contentReference = Model.CurrentPage.ContentLink})
+@Html.ReactComponent("TestPage", new { contentReference = Model.CurrentPage.ContentLink, editMode = PageEditing.PageIsInEditMode })

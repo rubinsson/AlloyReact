@@ -25,7 +25,7 @@ namespace AlloyReact.Controllers.testpage
 
         [HttpGet]
         [Route]
-        public IHttpActionResult Get(string contentId)
+        public IHttpActionResult Get()
         {
             var parent = _contentLoader.Get<PageData>(new ContentReference(163));
 
@@ -41,12 +41,26 @@ namespace AlloyReact.Controllers.testpage
         private ParentLink CreateContentTreeLink(PageData page, IEnumerable<ChildrenLink> children)
         {
 
-            return new ParentLink(_urlResolver.GetUrl(page.ContentLink), children);
+            return new ParentLink(GetUrl(page.ContentLink), children);
         }
 
         private ChildrenLink CreateContentTreeLinkItem(PageData page)
         {
-            return new ChildrenLink(page, _urlResolver.GetUrl(page.ContentLink));
+            return new ChildrenLink(page, GetUrl(page.ContentLink));
+        }
+
+        private string GetUrl(ContentReference contentLink)
+        {
+            var contextMode = IsInEditMode() ? ContextMode.Edit : ContextMode.Default;
+            return _urlResolver.GetUrl(contentLink, null, new UrlResolverArguments { ContextMode = contextMode });
+        }
+
+        private bool IsInEditMode()
+        {
+            var queryString = ControllerContext.Request.GetQueryNameValuePairs();
+            return queryString.Any(value =>
+                string.Equals(value.Key, "epieditmode", StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(value.Value, Boolean.TrueString, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -14,7 +14,7 @@ export default class ReactBlock extends React.Component {
         this.state = {
             url: "",
             editurl: "",
-            children: [],
+            children: []
         };
     }
 
@@ -41,7 +41,7 @@ export default class ReactBlock extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/api/tree?contentId=" + this.props.contentReference)
+        fetch(this.getUrl())
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -50,5 +50,13 @@ export default class ReactBlock extends React.Component {
                     children: json.children
                 });
             });
+    }
+
+    getUrl() {
+        let urlString = "/api/tree";
+        if (this.props.editMode == "true") {
+            urlString = `${urlString}?epieditmode=${this.props.editMode}`;
+        }
+        return urlString;
     }
 }
