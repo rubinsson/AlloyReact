@@ -25,12 +25,12 @@ namespace AlloyReact.Controllers.testpage
 
         [HttpGet]
         [Route]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string contentId)
         {
-            var parent = _contentLoader.Get<PageData>(new ContentReference(163));
+            var parent = _contentLoader.Get<PageData>(new ContentReference(contentId));
 
             var children = _contentLoader
-                .GetChildren<PageData>(new ContentReference(163))
+                .GetChildren<PageData>(new ContentReference(contentId))
                 .Select(CreateContentTreeLinkItem);
 
             var test = CreateContentTreeLink(parent, children);

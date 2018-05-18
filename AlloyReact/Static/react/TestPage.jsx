@@ -3,8 +3,39 @@ import ContentComponent from "./ContentComponent";
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link as ReactLink
   } from 'react-router-dom'
+
+const Link = ({editmode, url, name}) => {
+    return (
+        <li>
+        {
+            editmode ? <a href={url}>{name}</a> : <ReactLink to={{ pathname: url }}>{name}</ReactLink>
+        }
+        </li>
+    );
+};
+
+const RenderParent = ({editmode, url, contentReference}) => {
+    return editmode ? <ContentComponent contentReference={contentReference} /> : <Route path={url} exact render={() => <ContentComponent contentReference={contentReference} />} />;
+};
+
+const RenderChildren = ({editmode, children}) => {
+    
+    if(editmode) {
+        return null;
+    }
+
+    return (
+        <div>
+            {
+                children.map((item, index) => {
+                    return <Route path={item.url} key={index} exact render={() => <ContentComponent contentReference={item.contentReference} />} />
+                }) 
+            }
+        </div>
+    );
+};
 
 export default class ReactBlock extends React.Component {
 
@@ -14,7 +45,7 @@ export default class ReactBlock extends React.Component {
         this.state = {
             url: "",
             editurl: "",
-            children: []
+            children: [],
         };
     }
 
@@ -22,19 +53,18 @@ export default class ReactBlock extends React.Component {
         return (
             <Router>
                 <div>
+                    <h1>React component</h1>
                     <ul>                
                     {
                         //Creating links to children
-                        this.state.children.map((item, index) => <li key={index}><Link to={{ pathname: item.url }}>{item.name}</Link></li>)
+                        this.state.children.map((item, index) => {
+                            return <Link editmode={this.props.editMode} url={item.url} name={item.name} key={index}/>
+                        })
+                        
                     }
                     </ul>
-                    {
-                        //Register routes for children
-                        this.state.children.map((item, index) => <Route path={item.url} exact render={(props) => <ContentComponent contentReference={item.contentReference} />} key={index} />)
-
-                        //Register route for parent
-                    }
-                    <Route path={this.state.url} exact render={() => <ContentComponent contentReference={this.props.contentReference} />}/>
+                    <RenderChildren editmode={this.props.editMode} children={this.state.children} />
+                    <RenderParent editmode={this.props.editMode} url={this.state.url} contentReference={this.props.contentReference} />
                 </div>
             </Router>
         );
@@ -46,16 +76,15 @@ export default class ReactBlock extends React.Component {
             .then(json => {
                 this.setState({
                     url: json.url,
-                    editurl: json.editurl,
                     children: json.children
                 });
             });
     }
 
     getUrl() {
-        let urlString = "/api/tree";
-        if (this.props.editMode == "true") {
-            urlString = `${urlString}?epieditmode=${this.props.editMode}`;
+        let urlString = "/api/tree?contentId=" + this.props.contentReference;
+        if (this.props.editMode) {
+            urlString = `${urlString}&epieditmode=${this.props.editMode}`;
         }
         return urlString;
     }
