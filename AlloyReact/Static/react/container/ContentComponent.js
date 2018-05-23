@@ -13,9 +13,7 @@ export default class ReactBlock extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.state.mainBody}
-            </div>
+            <p data-epi-property-name="Mainbody" dangerouslySetInnerHTML={{ __html: this.state.mainBody }}></p>
         );
     }
     componentDidMount() {
