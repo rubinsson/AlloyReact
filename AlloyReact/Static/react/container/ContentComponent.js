@@ -12,7 +12,11 @@ export default class ReactBlock extends React.Component {
 
 
     render() {
-        return (<p>{this.state.mainBody}</p>);
+        return (
+            <div>
+                {this.state.mainBody}
+            </div>
+        );
     }
     componentDidMount() {
         fetch("/api/content?contentId=" + this.props.contentReference)
