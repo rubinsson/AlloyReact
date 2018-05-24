@@ -2,7 +2,8 @@ import React from "react";
 import { Route } from 'react-router-dom'
 import ContentComponent from "../container/ContentComponent";
 
-const ChildrenRoutes = ({editmode, children}) => {
+const MenuRoutes = ({editmode, menu}) => {
+
     //When we are in editmode dont register any routes since we use the regular routing.
     if(editmode) {
         return null;
@@ -11,7 +12,8 @@ const ChildrenRoutes = ({editmode, children}) => {
     return (
         <div>
             {
-                children.map((item, index) => {
+                //When we are not in editmode, register routes so the routing will work.
+                menu.map((item, index) => {
                     return <Route path={item.url} key={index} exact render={() => <ContentComponent contentReference={item.contentReference} />} />
                 }) 
             }
@@ -19,4 +21,4 @@ const ChildrenRoutes = ({editmode, children}) => {
     );
 };
 
-export default ChildrenRoutes;
+export default MenuRoutes;
