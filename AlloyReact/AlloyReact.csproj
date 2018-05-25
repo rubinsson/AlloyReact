@@ -439,6 +439,10 @@
     <Content Include="Static\jwplayer\preview.jpg" />
     <Content Include="Static\jwplayer\video.mp4" />
     <Content Include="Static\react\Clock.jsx" />
+    <Content Include="Static\react\components\ContentRoutes.js" />
+    <Content Include="Static\react\components\Link.js" />
+    <Content Include="Static\react\components\MenuRoutes.js" />
+    <Content Include="Static\react\container\ContentComponent.js" />
     <Content Include="Static\react\index.js" />
     <Content Include="Static\react\PageListBlock.jsx" />
     <Content Include="Static\react\TestPage.jsx" />

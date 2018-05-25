@@ -29,8 +29,8 @@ export default class ReactBlock extends React.Component {
                         
                     }
                     </ul>
-                    <MenuRoutes editmode={this.props.editMode} menu={this.state.menu} />
-                    <ContentRoutes editmode={this.props.editMode} url={this.state.url} contentReference={this.props.contentReference} />
+                    <MenuRoutes editmode={this.props.editMode} menu={this.state.menu} language={this.props.language} />
+                    <ContentRoutes editmode={this.props.editMode} url={this.state.url} contentReference={this.props.contentReference} language={this.props.language} />
                 </div>
             </Router>
         );
@@ -49,7 +49,7 @@ export default class ReactBlock extends React.Component {
 
     //When we are in editmode add epieditmode=true to the url
     getUrl() {
-        let urlString = "/api/tree?contentId=" + this.props.contentReference;
+        let urlString = "/api/tree?contentId=" + this.props.contentReference + "&language=" + this.props.language;
         if (this.props.editMode) {
             urlString = `${urlString}&epieditmode=${this.props.editMode}`;
         }

@@ -17,7 +17,7 @@ export default class ReactBlock extends React.Component {
         );
     }
     componentDidMount() {
-        fetch("/api/content?contentId=" + this.props.contentReference)
+        fetch("/api/content?contentId=" + this.props.contentReference + "&language=" + this.props.language)
             .then(response => response.json())
             .then(json => {
                 this.setState({

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -20,10 +21,10 @@ namespace AlloyReact.Controllers.testpage
 
         [HttpGet]
         [Route]
-        public IHttpActionResult Get(string contentId)
+        public IHttpActionResult Get(string contentId, string language)
         {
-            var contentLink = ContentReference.Parse(contentId);
-            var content = _contentLoader.Get<IContent>(contentLink);
+            var languageBranch = CultureInfo.GetCultureInfo(language);
+            var content = _contentLoader.Get<IContent>(new ContentReference(contentId), languageBranch);
             return Ok(content);
         }
     }

@@ -2,4 +2,4 @@
 @using EPiServer.Editor;
 @model PageViewModel<TestPage>
 
-@Html.ReactComponent("TestPage", new { contentReference = Model.CurrentPage.ContentLink, editMode = PageEditing.PageIsInEditMode, mainBody = Model.CurrentPage.MainBody })
+@Html.ReactComponent("TestPage", new { language = Model.CurrentPage.Language ,contentReference = Model.CurrentPage.ContentLink, editMode = PageEditing.PageIsInEditMode, mainBody = Model.CurrentPage.MainBody })
